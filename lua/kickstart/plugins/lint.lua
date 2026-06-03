@@ -4,6 +4,11 @@ vim.pack.add { 'https://github.com/mfussenegger/nvim-lint' }
 
 local lint = require 'lint'
 lint.linters_by_ft = {
+  python = { 'ruff' },             -- Python 快速检查（需安装 ruff）
+  javascript = { 'eslint_d' },     -- JS 检查（需安装 eslint_d）
+  typescript = { 'eslint_d' },     -- TS 检查
+  javascriptreact = { 'eslint_d' },
+  typescriptreact = { 'eslint_d' },
   markdown = { 'markdownlint' }, -- 确保通过 mason / npm 安装了 `markdownlint`
 }
 

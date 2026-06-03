@@ -686,14 +686,19 @@ do
   local servers = {
     -- clangd = {},
     -- gopls = {},
-    -- pyright = {},
     -- rust_analyzer = {},
-    --
-    -- 某些语言（如 typescript）有完整的语言插件，可能会很有用：
-    --    https://github.com/pmizio/typescript-tools.nvim
-    --
-    -- 但对大多数设置而言，LSP（`ts_ls`）就已经够用了
-    -- ts_ls = {},
+
+    -- Java 语言服务器（需要 JDK 17+）
+    jdtls = {},
+
+    -- Python 语言服务器（基于 Pyright，推荐）
+    basedpyright = {},
+
+    -- TypeScript/JavaScript 语言服务器
+    ts_ls = {},
+
+    -- CSS/SCSS/Less 语言服务器
+    -- tailwindcss = {}, -- 如果你用 Tailwind CSS，取消注释
 
     stylua = {}, -- 用于格式化 Lua 代码
 
@@ -751,7 +756,11 @@ do
   -- 在此菜单中按 `g?` 可以获取帮助。
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
-    -- 你可以在这里添加其他想让 Mason 安装的工具
+    'ruff',                -- Python 快速检查/格式化
+    'prettierd',           -- JS/TS/CSS/JSON 格式化
+    'google-java-format',  -- Java 格式化
+    'debugpy',            -- Python 调试器
+    'js-debug-adapter',   -- JS/TS 调试器
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -791,10 +800,15 @@ do
     formatters_by_ft = {
       -- rust = { 'rustfmt' },
       -- Conform 也可以按顺序运行多个格式化工具
-      -- python = { "isort", "black" },
-      --
-      -- 使用 'stop_after_first' 运行列表中第一个可用的格式化工具
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      python = { 'ruff_format', 'ruff_organize_imports' },
+      java = { 'google-java-format' },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      json = { 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
     },
   }
 
@@ -897,7 +911,7 @@ do
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
   -- 确保基本的解析器已安装
-  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'java', 'python', 'javascript', 'typescript', 'tsx', 'css', 'json' }
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
