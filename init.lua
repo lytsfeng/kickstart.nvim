@@ -98,7 +98,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- 如果安装了 Nerd Font 并在终端中选中，设为 true
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true 
 
   -- [[ 设置选项 ]]
   --  参见 `:help vim.o`
@@ -162,6 +162,9 @@ do
 
   -- 显示光标所在行
   vim.o.cursorline = true
+
+  -- 设置相对行
+  vim.o.relativenumber = true
 
   -- 光标上下方保留的最少屏幕行数。
   vim.o.scrolloff = 10
@@ -771,8 +774,9 @@ do
     format_on_save = function(bufnr)
       -- 你可以在此指定保存时自动格式化的文件类型：
       local enabled_filetypes = {
-        -- lua = true,
-        -- python = true,
+        lua = true,
+        python = true,
+        java = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
