@@ -1,4 +1,4 @@
--- autopairs
+-- 自动配对
 -- https://github.com/windwp/nvim-autopairs
 
 vim.pack.add { 'https://github.com/windwp/nvim-autopairs' }

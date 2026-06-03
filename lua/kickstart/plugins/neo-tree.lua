@@ -1,4 +1,4 @@
--- Neo-tree is a Neovim plugin to browse the file system
+-- Neo-tree 是一个用于浏览文件系统的 Neovim 插件
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 
 local plugins = {
@@ -8,7 +8,7 @@ local plugins = {
 }
 
 if vim.g.have_nerd_font then
-  table.insert(plugins, 'https://github.com/nvim-tree/nvim-web-devicons') -- not strictly required, but recommended
+  table.insert(plugins, 'https://github.com/nvim-tree/nvim-web-devicons') -- 非必需，但推荐
 end
 
 vim.pack.add(plugins)

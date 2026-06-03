@@ -1,9 +1,9 @@
 --[[
 
 =====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
+==================== 继续前请先阅读本文 ====================
 =====================================================================
-========                                    .-----.          ========
+========                                 .-----.          ========
 ========         .----------------------.   | === |          ========
 ========         |.-""""""""""""""""""-.|   |-----|          ========
 ========         ||                    ||   | === |          ========
@@ -20,178 +20,177 @@
 =====================================================================
 =====================================================================
 
-What is Kickstart?
+什么是 Kickstart？
 
-  Kickstart.nvim is *not* a distribution.
+  Kickstart.nvim **不是**一个发行版。
 
-  Kickstart.nvim is a starting point for your own configuration.
-    The goal is that you can read every line of code, top-to-bottom, understand
-    what your configuration is doing, and modify it to suit your needs.
+  Kickstart.nvim 是你个人配置的起点。
+    目标是让你能从上到下阅读每一行代码，理解
+    你的配置在做什么，并根据需要修改它。
 
-    Once you've done that, you can start exploring, configuring and tinkering to
-    make Neovim your own! That might mean leaving Kickstart just the way it is for a while
-    or immediately breaking it into modular pieces. It's up to you!
+    完成之后，你就可以开始探索、配置和调整，
+    让 Neovim 成为你自己的编辑器！这可能意味着暂时保持 Kickstart 原样，
+    或者立即将其拆分为模块化组件。由你决定！
 
-    If you don't know anything about Lua, I recommend taking some time to read through
-    a guide. One possible example which will only take 10-15 minutes:
+    如果你对 Lua 一无所知，我建议花些时间阅读
+    一份教程。一个只需 10-15 分钟的示例：
       - https://learnxinyminutes.com/docs/lua/
 
-    After understanding a bit more about Lua, you can use `:help lua-guide` as a
-    reference for how Neovim integrates Lua.
+    对 Lua 有了基本了解后，可以使用 `:help lua-guide` 作为
+    了解 Neovim 如何集成 Lua 的参考。
     - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
+    - （或 HTML 版本）：https://neovim.io/doc/user/lua-guide.html
 
-Kickstart Guide:
+Kickstart 指南：
 
-  TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
+  TODO：你应该做的第一件事是在 Neovim 中运行命令 `:Tutor`。
 
-    If you don't know what this means, type the following:
-      - <escape key>
-      - :
-      - Tutor
-      - <enter key>
+    如果你不知道这意味着什么，请按以下步骤操作：
+      - 按 <escape 键>
+      - 输入 :
+      - 输入 Tutor
+      - 按 <enter 键>
 
-    (If you already know the Neovim basics, you can skip this step.)
+    （如果你已经了解 Neovim 基础，可以跳过此步。）
 
-  Once you've completed that, you can continue working through **AND READING** the rest
-  of the kickstart init.lua.
+  完成之后，你可以继续学习**并阅读** kickstart init.lua 的其余部分。
 
-  Next, run AND READ `:help`.
-    This will open up a help window with some basic information
-    about reading, navigating and searching the builtin help documentation.
+  接下来，运行并阅读 `:help`。
+    这将打开一个帮助窗口，包含一些基本信息，
+    关于如何阅读、导航和搜索内置帮助文档。
 
-    This should be the first place you go to look when you're stuck or confused
-    with something. It's one of my favorite Neovim features.
+    当你遇到困难或对某些东西感到困惑时，这应该是你首先查阅的地方。
+    这是我最喜欢的 Neovim 功能之一。
 
-    MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
-    which is very useful when you're not exactly sure of what you're looking for.
+    **最重要的是**，我们提供了一个按键映射 "<space>sh" 来[搜]索帮[助]文档，
+    当你不确定要找什么时非常有用。
 
-  I have left several `:help X` comments throughout the init.lua
-    These are hints about where to find more information about the relevant settings,
-    plugins or Neovim features used in Kickstart.
+  我在 init.lua 中留下了几个 `:help X` 注释
+    这些是关于在哪里找到相关设置、插件或
+    Kickstart 中使用的 Neovim 功能的提示。
 
-   NOTE: Look for lines like this
+   注意：请寻找像这样的注释行
 
-    Throughout the file. These are for you, the reader, to help you understand what is happening.
-    Feel free to delete them once you know what you're doing, but they should serve as a guide
-    for when you are first encountering a few different constructs in your Neovim config.
+    遍布整个文件。这些是为你——读者——准备的，帮助你理解正在发生的事情。
+    一旦你掌握了要领，可以随意删除它们，但它们应该在
+    你首次接触 Neovim 配置中的各种结构时起到指导作用。
 
-If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
+如果在安装 kickstart 时遇到任何错误，请运行 `:checkhealth` 获取更多信息。
 
-I hope you enjoy your Neovim journey,
+希望你享受 Neovim 之旅，
 - TJ
 
-P.S. You can delete this when you're done too. It's your config now! :)
+附：完成后你也可以删除这段内容。现在这是你的配置了！:)
 --]]
 
 -- ============================================================
--- SECTION 1: FOUNDATION
--- Core Neovim settings, leaders, options, basic keymaps, basic autocmds
+-- 第 1 节：基础
+-- 核心 Neovim 设置、leader 键、选项、基本按键映射、基本自动命令
 -- ============================================================
 do
-  -- Enable faster startup by caching compiled Lua modules
+  -- 通过缓存编译的 Lua 模块加速启动
   vim.loader.enable()
 
-  -- Set <space> as the leader key
-  -- See `:help mapleader`
-  --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+  -- 设置 <空格> 为 leader 键
+  -- 参见 `:help mapleader`
+  --  注意：必须在加载插件之前设置（否则会使用错误的 leader 键）
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ' '
 
-  -- Set to true if you have a Nerd Font installed and selected in the terminal
+  -- 如果安装了 Nerd Font 并在终端中选中，设为 true
   vim.g.have_nerd_font = false
 
-  -- [[ Setting options ]]
-  --  See `:help vim.o`
-  -- NOTE: You can change these options as you wish!
-  --  For more options, you can see `:help option-list`
+  -- [[ 设置选项 ]]
+  --  参见 `:help vim.o`
+  -- 注意：你可以随意更改这些选项！
+  --  更多选项，请查看 `:help option-list`
 
-  -- Make line numbers default
+  -- 默认显示行号
   vim.o.number = true
-  -- You can also add relative line numbers, to help with jumping.
-  --  Experiment for yourself to see if you like it!
+  -- 你也可以添加相对行号，有助于跳转。
+  --  自己试试看喜不喜欢！
   -- vim.o.relativenumber = true
 
-  -- Enable mouse mode, can be useful for resizing splits for example!
+  -- 启用鼠标模式，例如在调整分割窗口大小时有用！
   vim.o.mouse = 'a'
 
-  -- Don't show the mode, since it's already in the status line
+  -- 不显示模式，因为状态栏已经显示了
   vim.o.showmode = false
 
-  -- Sync clipboard between OS and Neovim.
-  --  Schedule the setting after `UiEnter` because it can increase startup-time.
-  --  Remove this option if you want your OS clipboard to remain independent.
-  --  See `:help 'clipboard'`
+  -- 同步操作系统和 Neovim 的剪贴板。
+  --  安排在 `UiEnter` 之后设置，因为它会增加启动时间。
+  --  如果希望操作系统剪贴板保持独立，请移除此选项。
+  --  参见 `:help 'clipboard'`
   vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
-  -- Enable break indent
+  -- 启用断行缩进
   vim.o.breakindent = true
 
-  -- Enable undo/redo changes even after closing and reopening a file
+  -- 即使关闭并重新打开文件，也保留撤销/重做更改
   vim.o.undofile = true
 
-  -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
+  -- 不区分大小写搜索，除非包含 \C 或搜索词中有大写字母
   vim.o.ignorecase = true
   vim.o.smartcase = true
 
-  -- Keep signcolumn on by default
+  -- 默认显示符号列
   vim.o.signcolumn = 'yes'
 
-  -- Decrease update time
+  -- 减少更新时间
   vim.o.updatetime = 250
 
-  -- Decrease mapped sequence wait time
+  -- 减少按键序列等待时间
   vim.o.timeoutlen = 300
 
-  -- Configure how new splits should be opened
+  -- 配置新分割窗口的打开方式
   vim.o.splitright = true
   vim.o.splitbelow = true
 
-  -- Sets how neovim will display certain whitespace characters in the editor.
-  --  See `:help 'list'`
-  --  and `:help 'listchars'`
+  -- 设置 neovim 如何显示编辑器中的某些空白字符。
+  --  参见 `:help 'list'`
+  --  和 `:help 'listchars'`
   --
-  --  Notice listchars is set using `vim.opt` instead of `vim.o`.
-  --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
-  --   See `:help lua-options`
-  --   and `:help lua-guide-options`
+  --  注意 listchars 是使用 `vim.opt` 而不是 `vim.o` 设置的。
+  --  它与 `vim.o` 非常相似，但提供了更方便的表格交互接口。
+  --   参见 `:help lua-options`
+  --   和 `:help lua-guide-options`
   vim.o.list = true
   vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
-  -- Preview substitutions live, as you type!
+  -- 实时预览替换结果！
   vim.o.inccommand = 'split'
 
-  -- Show which line your cursor is on
+  -- 显示光标所在行
   vim.o.cursorline = true
 
-  -- Minimal number of screen lines to keep above and below the cursor.
+  -- 光标上下方保留的最少屏幕行数。
   vim.o.scrolloff = 10
 
-  -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
-  -- instead raise a dialog asking if you wish to save the current file(s)
-  -- See `:help 'confirm'`
+  -- 如果执行的操作会因缓冲区有未保存的更改而失败（如 `:q`），
+  -- 则弹出对话框询问是否要保存当前文件
+  -- 参见 `:help 'confirm'`
   vim.o.confirm = true
 
-  -- [[ Basic Keymaps ]]
-  --  See `:help vim.keymap.set()`
+  -- [[ 基本按键映射 ]]
+  --  参见 `:help vim.keymap.set()`
 
-  -- Clear highlights on search when pressing <Esc> in normal mode
-  --  See `:help hlsearch`
+  -- 在普通模式下按 <Esc> 清除搜索高亮
+  --  参见 `:help hlsearch`
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
-  -- Diagnostic Config & Keymaps
-  --  See `:help vim.diagnostic.Opts`
+  -- 诊断配置和按键映射
+  --  参见 `:help vim.diagnostic.Opts`
   vim.diagnostic.config {
     update_in_insert = false,
     severity_sort = true,
     float = { border = 'rounded', source = 'if_many' },
     underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
-    -- Can switch between these as you prefer
-    virtual_text = true, -- Text shows up at the end of the line
-    virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+    -- 可以按喜好切换这些选项
+    virtual_text = true, -- 文本显示在行尾
+    virtual_lines = false, -- 文本显示在行下方，使用虚拟行
 
-    -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+    -- 自动打开浮动窗口，方便使用 `[d` 和 `]d` 跳转时阅读错误
     jump = {
       on_jump = function(_, bufnr)
         vim.diagnostic.open_float {
@@ -203,75 +202,74 @@ do
     },
   }
 
-  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = '打开诊断[快]速修复列表' })
 
-  -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
-  -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
-  -- is not what someone will guess without a bit more experience.
+  -- 用一个更容易发现的快捷键退出内置终端的终端模式。
+  -- 否则，通常需要按 <C-\><C-n>，没有一定经验的人猜不到。
   --
-  -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
-  -- or just use <C-\><C-n> to exit terminal mode
-  vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+  -- 注意：这在所有终端模拟器/tmux 等中可能不起作用。
+  -- 尝试自己的映射，或者直接使用 <C-\><C-n> 退出终端模式
+  vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = '退出终端模式' })
 
-  -- TIP: Disable arrow keys in normal mode
+  -- 提示：在普通模式下禁用方向键
   -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
   -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
   -- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
   -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
-  -- Keybinds to make split navigation easier.
-  --  Use CTRL+<hjkl> to switch between windows
+  -- 使分割窗口导航更便捷的按键绑定。
+  --  使用 CTRL+<hjkl> 在窗口间切换
   --
-  --  See `:help wincmd` for a list of all window commands
-  vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-  vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-  vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-  vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+  --  参见 `:help wincmd` 获取所有窗口命令列表
+  vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = '将焦点移到左侧窗口' })
+  vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = '将焦点移到右侧窗口' })
+  vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = '将焦点移到下方窗口' })
+  vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = '将焦点移到上方窗口' })
 
-  -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
+  -- 注意：某些终端有冲突的按键映射，或无法发送不同的键码
   -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
   -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
   -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
   -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
-  -- [[ Basic Autocommands ]]
-  --  See `:help lua-guide-autocommands`
+  -- [[ 基本自动命令 ]]
+  --  参见 `:help lua-guide-autocommands`
 
-  -- Highlight when yanking (copying) text
-  --  Try it with `yap` in normal mode
-  --  See `:help vim.hl.on_yank()`
+  -- 复制文本时高亮
+  --  在普通模式下用 `yap` 试试
+  --  参见 `:help vim.hl.on_yank()`
   vim.api.nvim_create_autocmd('TextYankPost', {
-    desc = 'Highlight when yanking (copying) text',
+    desc = '复制文本时高亮',
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
     callback = function() vim.hl.on_yank() end,
   })
 end
 
 -- ============================================================
--- SECTION 2: PLUGIN MANAGER INTRO
--- vim.pack intro, build hooks
+-- 第 2 节：插件管理器介绍
+-- vim.pack 介绍、构建钩子
 -- ============================================================
 do
-  -- [[ Intro to `vim.pack` ]]
-  -- `vim.pack` is a new plugin manager built into Neovim,
-  --  which provides a Lua interface for installing and managing plugins.
+  -- [[ `vim.pack` 介绍 ]]
+  -- `vim.pack` 是 Neovim 内置的插件管理器，
+  --  提供用于安装和管理插件的 Lua 接口。
   --
-  --  See `:help vim.pack`, `:help vim.pack-examples` or the
-  --  excellent blog post from the creator of vim.pack and mini.nvim:
+  --  参见 `:help vim.pack`、`:help vim.pack-examples` 或
+  --  vim.pack 和 mini.nvim 作者的博客文章：
   --  https://echasnovski.com/blog/2026-03-13-a-guide-to-vim-pack
   --
-  --  To inspect plugin state and pending updates, run
+  --  检查插件状态和待处理更新，运行
   --    :lua vim.pack.update(nil, { offline = true })
   --
-  --  To update plugins, run
+  --  更新插件，运行
   --    :lua vim.pack.update()
   --
   --
-  --  Throughout the rest of the config there will be examples
-  --  of how to install and configure plugins using `vim.pack`.
+  --  在配置的其余部分中，将有示例展示如何使用 `vim.pack`
+  --  安装和配置插件。
   --
-  --  In this section we set up some autocommands to run build
-  --  steps for certain plugins after they are installed or updated.
+  --  在本节中，我们设置了一些自动命令，在特定插件
+  --  安装或更新后运行构建步骤。
 
   local function run_build(name, cmd, cwd)
     local result = vim.system(cmd, { cwd = cwd }):wait()
@@ -279,15 +277,15 @@ do
       local stderr = result.stderr or ''
       local stdout = result.stdout or ''
       local output = stderr ~= '' and stderr or stdout
-      if output == '' then output = 'No output from build command.' end
-      vim.notify(('Build failed for %s:\n%s'):format(name, output), vim.log.levels.ERROR)
+      if output == '' then output = '构建命令无输出。' end
+      vim.notify(('%s 构建失败：\n%s'):format(name, output), vim.log.levels.ERROR)
     end
   end
 
-  -- This autocommand runs after a plugin is installed or updated and
-  --  runs the appropriate build command for that plugin if necessary.
+  -- 此自动命令在插件安装或更新后运行，
+  --  并在必要时执行该插件的适当构建命令。
   --
-  -- See `:help vim.pack-events`
+  -- 参见 `:help vim.pack-events`
   vim.api.nvim_create_autocmd('PackChanged', {
     callback = function(ev)
       local name = ev.data.spec.name
@@ -313,44 +311,44 @@ do
   })
 end
 
----Because most plugins are hosted on GitHub, you can use the helper
----function to have less repetition in the following sections.
+---由于大多数插件托管在 GitHub 上，可以使用此辅助
+---函数来减少后续部分的重复代码。
 ---@param repo string
 ---@return string
 local function gh(repo) return 'https://github.com/' .. repo end
 
 -- ============================================================
--- SECTION 3: UI / CORE UX PLUGINS
--- guess-indent, gitsigns, which-key, colorscheme, todo-comments, mini modules
+-- 第 3 节：UI / 核心用户体验插件
+-- guess-indent、gitsigns、which-key、颜色主题、todo-comments、mini 模块
 -- ============================================================
 do
-  -- [[ Installing and Configuring Plugins ]]
+  -- [[ 安装和配置插件 ]]
   --
-  -- To install a plugin simply call `vim.pack.add` with its git url.
-  -- This will download the default branch of the plugin, which will usually be `main` or `master`
-  -- You can also have more advanced specs, which we will talk about later.
+  -- 使用 `vim.pack.add` 并传入 git 地址即可安装插件。
+  -- 这将下载插件的默认分支，通常是 `main` 或 `master`。
+  -- 你也可以使用更高级的规范，后面会介绍。
   --
-  -- For most plugins its not enough to install them, you also need to call their `.setup()` to start them.
+  -- 对大多数插件来说，仅安装还不够，还需要调用它们的 `.setup()` 来启动。
   --
-  -- For example, lets say we want to install `guess-indent.nvim` - a plugin for
-  -- automatically detecting and setting the indentation.
+  -- 例如，假设我们要安装 `guess-indent.nvim` —— 一个用于
+  -- 自动检测和设置缩进的插件。
   --
-  -- We first install it from https://github.com/NMAC427/guess-indent.nvim
-  -- and then call its `setup()` function to start it with default settings.
+  -- 首先从 https://github.com/NMAC427/guess-indent.nvim 安装它，
+  -- 然后调用其 `setup()` 函数以默认设置启动。
   vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
   require('guess-indent').setup {}
 
-  -- Because lua is a real programming language, you can also have some logic to your installation -
-  -- like only installing a plugin if a condition is met.
+  -- 因为 Lua 是真正的编程语言，你还可以在安装中加入一些逻辑——
+  -- 比如只有在满足条件时才安装插件。
   --
-  -- Here we only install `nvim-web-devicons` (which adds pretty icons) if we have a Nerd Font,
-  -- since otherwise the icons won't display properly.
+  -- 这里我们只在有 Nerd Font 时才安装 `nvim-web-devicons`（添加漂亮图标），
+  -- 否则图标无法正确显示。
   if vim.g.have_nerd_font then vim.pack.add { gh 'nvim-tree/nvim-web-devicons' } end
 
-  -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
+  -- 这是一个更高级的配置示例，向 `gitsigns.nvim` 传递选项。
   --
-  -- See `:help gitsigns` to understand what each configuration key does.
-  -- Adds git related signs to the gutter, as well as utilities for managing changes
+  -- 参见 `:help gitsigns` 了解每个配置键的作用。
+  -- 在侧边栏添加 git 相关标志，以及管理更改的工具
   vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
   require('gitsigns').setup {
     signs = {
@@ -362,56 +360,56 @@ do
     },
   }
 
-  -- Useful plugin to show you pending keybinds.
+  -- 显示待定按键绑定的实用插件。
   vim.pack.add { gh 'folke/which-key.nvim' }
   require('which-key').setup {
-    -- Delay between pressing a key and opening which-key (milliseconds)
+    -- 按键按下到打开 which-key 的延迟（毫秒）
     delay = 0,
     icons = { mappings = vim.g.have_nerd_font },
-    -- Document existing key chains
+    -- 记录现有的按键链
     spec = {
-      { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
-      { '<leader>t', group = '[T]oggle' },
-      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
-      { 'gr', group = 'LSP Actions', mode = { 'n' } },
+      { '<leader>s', group = '[搜]索', mode = { 'n', 'v' } },
+      { '<leader>t', group = '[切]换' },
+      { '<leader>h', group = 'Git [块]', mode = { 'n', 'v' } }, -- 首先启用 gitsigns 推荐的按键映射
+      { 'gr', group = 'LSP 操作', mode = { 'n' } },
     },
   }
 
-  -- [[ Colorscheme ]]
-  -- You can easily change to a different colorscheme.
-  -- Change the name of the colorscheme plugin below, and then
-  -- change the command under that to load whatever the name of that colorscheme is.
+  -- [[ 颜色主题 ]]
+  -- 你可以轻松更换为不同的颜色主题。
+  -- 更改下面颜色主题插件的名称，然后
+  -- 修改下面的命令以加载相应名称的颜色主题。
   --
-  -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  -- 如果想查看已安装的颜色主题，可以使用 `:Telescope colorscheme`。
   vim.pack.add { gh 'folke/tokyonight.nvim' }
   ---@diagnostic disable-next-line: missing-fields
   require('tokyonight').setup {
     styles = {
-      comments = { italic = false }, -- Disable italics in comments
+      comments = { italic = false }, -- 禁用注释中的斜体
     },
   }
 
-  -- Load the colorscheme here.
-  -- Like many other themes, this one has different styles, and you could load
-  -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  -- 在这里加载颜色主题。
+  -- 与许多其他主题一样，这个主题有不同的风格，你可以加载
+  -- 其他风格，如 'tokyonight-storm'、'tokyonight-moon' 或 'tokyonight-day'。
   vim.cmd.colorscheme 'tokyonight-night'
 
-  -- Highlight todo, notes, etc in comments
+  -- 在注释中高亮 TODO、笔记等
   vim.pack.add { gh 'folke/todo-comments.nvim' }
   require('todo-comments').setup { signs = false }
 
   -- [[ mini.nvim ]]
-  --  A collection of various small independent plugins/modules
+  --  各种小型独立插件/模块的集合
   vim.pack.add { gh 'nvim-mini/mini.nvim' }
 
-  -- Better Around/Inside textobjects
+  -- 更好的 Around/Inside 文本对象
   --
-  -- Examples:
+  -- 示例：
   --  - va)  - [V]isually select [A]round [)]paren
   --  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
   --  - ci'  - [C]hange [I]nside [']quote
   require('mini.ai').setup {
-    -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
+    -- 注意：避免与 Neovim>=0.12 的内置增量选择映射冲突（参见 `:help treesitter-incremental-selection`）
     mappings = {
       around_next = 'aa',
       inside_next = 'ii',
@@ -419,58 +417,56 @@ do
     n_lines = 500,
   }
 
-  -- Add/delete/replace surroundings (brackets, quotes, etc.)
+  -- 添加/删除/替换包围符号（括号、引号等）
   --
   -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
   -- - sd'   - [S]urround [D]elete [']quotes
   -- - sr)'  - [S]urround [R]eplace [)] [']
   require('mini.surround').setup()
 
-  -- Simple and easy statusline.
-  --  You could remove this setup call if you don't like it,
-  --  and try some other statusline plugin
+  -- 简单易用的状态栏。
+  --  如果不喜欢，可以移除此设置调用，
+  --  尝试其他状态栏插件
   local statusline = require 'mini.statusline'
-  -- Set `use_icons` to true if you have a Nerd Font
+  -- 如果有 Nerd Font，设置 `use_icons` 为 true
   statusline.setup { use_icons = vim.g.have_nerd_font }
 
-  -- You can configure sections in the statusline by overriding their
-  -- default behavior. For example, here we set the section for
-  -- cursor location to LINE:COLUMN
+  -- 你可以通过覆盖默认行为来配置状态栏中的各个部分。
+  -- 例如，这里将光标位置部分设置为 行:列
   ---@diagnostic disable-next-line: duplicate-set-field
   statusline.section_location = function() return '%2l:%-2v' end
 
-  -- ... and there is more!
-  --  Check out: https://github.com/nvim-mini/mini.nvim
+  -- ... 还有更多功能！
+  --  查看：https://github.com/nvim-mini/mini.nvim
 end
 
 -- ============================================================
--- SECTION 4: SEARCH & NAVIGATION
--- Telescope setup, keymaps, LSP picker mappings
+-- 第 4 节：搜索与导航
+-- Telescope 设置、按键映射、LSP 选择器映射
 -- ============================================================
 do
-  -- [[ Fuzzy Finder (files, lsp, etc) ]]
+  -- [[ 模糊查找器（文件、LSP 等）]]
   --
-  -- Telescope is a fuzzy finder that comes with a lot of different things that
-  -- it can fuzzy find! It's more than just a "file finder", it can search
-  -- many different aspects of Neovim, your workspace, LSP, and more!
+  -- Telescope 是一个模糊查找器，可以模糊查找很多不同的东西！
+  -- 它不仅仅是"文件查找器"，还可以搜索 Neovim、工作区、LSP 等许多方面！
   --
-  -- There are lots of other alternative pickers (like snacks.picker, or fzf-lua)
-  -- so feel free to experiment and see what you like!
+  -- 还有很多其他替代选择器（如 snacks.picker 或 fzf-lua），
+  -- 所以可以自由尝试，看看你喜欢哪个！
   --
-  -- The easiest way to use Telescope, is to start by doing something like:
+  -- 使用 Telescope 的最简单方式是从类似这样的命令开始：
   --  :Telescope help_tags
   --
-  -- After running this command, a window will open up and you're able to
-  -- type in the prompt window. You'll see a list of `help_tags` options and
-  -- a corresponding preview of the help.
+  -- 运行此命令后，会打开一个窗口，你可以在其中
+  -- 输入内容。你会看到 `help_tags` 选项列表和
+  -- 相应的帮助预览。
   --
-  -- Two important keymaps to use while in Telescope are:
-  --  - Insert mode: <c-/>
-  --  - Normal mode: ?
+  -- 在 Telescope 中有两个重要的按键映射：
+  --  - 插入模式：<c-/>
+  --  - 普通模式：?
   --
-  -- This opens a window that shows you all of the keymaps for the current
-  -- Telescope picker. This is really useful to discover what Telescope can
-  -- do as well as how to actually do it!
+  -- 这会在当前 Telescope 选择器中打开一个窗口，
+  -- 显示所有按键映射。这对了解 Telescope 的功能
+  -- 以及如何使用非常有用！
 
   ---@type (string|vim.pack.Spec)[]
   local telescope_plugins = {
@@ -480,13 +476,13 @@ do
   }
   if vim.fn.executable 'make' == 1 then table.insert(telescope_plugins, gh 'nvim-telescope/telescope-fzf-native.nvim') end
 
-  -- NOTE: You can install multiple plugins at once
+  -- 注意：可以一次安装多个插件
   vim.pack.add(telescope_plugins)
 
-  -- See `:help telescope` and `:help telescope.setup()`
+  -- 参见 `:help telescope` 和 `:help telescope.setup()`
   require('telescope').setup {
-    -- You can put your default mappings / updates / etc. in here
-    --  All the info you're looking for is in `:help telescope.setup()`
+    -- 你可以在这里放置默认映射/更新等
+    --  所有需要的信息都在 `:help telescope.setup()` 中
     --
     -- defaults = {
     --   mappings = {
@@ -499,154 +495,153 @@ do
     },
   }
 
-  -- Enable Telescope extensions if they are installed
+  -- 如果已安装，启用 Telescope 扩展
   pcall(require('telescope').load_extension, 'fzf')
   pcall(require('telescope').load_extension, 'ui-select')
 
-  -- See `:help telescope.builtin`
+  -- 参见 `:help telescope.builtin`
   local builtin = require 'telescope.builtin'
-  vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-  vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-  vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-  vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-  vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-  vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-  vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-  vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-  vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-  vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
-  vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+  vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[搜]索帮[助]' })
+  vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[搜]索按键[映]射' })
+  vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[搜]索[文]件' })
+  vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[搜]索[选]择 Telescope' })
+  vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[搜]索当前[词]' })
+  vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[搜]索（[正]则）' })
+  vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[搜]索[诊]断' })
+  vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[搜]索[恢]复' })
+  vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[搜]索最近文件（"."重复）' })
+  vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[搜]索[命]令' })
+  vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] 查找现有缓冲区' })
 
-  -- Add Telescope-based LSP pickers when an LSP attaches to a buffer.
-  -- If you later switch picker plugins, this is where to update these mappings.
+  -- 当 LSP 附加到缓冲区时，添加基于 Telescope 的 LSP 选择器。
+  -- 如果以后切换选择器插件，就在这里更新这些映射。
   vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
     callback = function(event)
       local buf = event.buf
 
-      -- Find references for the word under your cursor.
-      vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
+      -- 查找光标下单词的引用。
+      vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '跳转到[引]用' })
 
-      -- Jump to the implementation of the word under your cursor.
-      -- Useful when your language has ways of declaring types without an actual implementation.
-      vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
+      -- 跳转到光标下单词的实现。
+      -- 当语言有声明类型但不提供实际实现时很有用。
+      vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '跳转到[实]现' })
 
-      -- Jump to the definition of the word under your cursor.
-      -- This is where a variable was first declared, or where a function is defined, etc.
-      -- To jump back, press <C-t>.
-      vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
+      -- 跳转到光标下单词的定义。
+      -- 这是变量首次声明或函数定义的位置。
+      -- 按 <C-t> 跳回。
+      vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '跳转到[定]义' })
 
-      -- Fuzzy find all the symbols in your current document.
-      -- Symbols are things like variables, functions, types, etc.
-      vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
+      -- 模糊查找当前文档中的所有符号。
+      -- 符号包括变量、函数、类型等。
+      vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = '打开文档符号' })
 
-      -- Fuzzy find all the symbols in your current workspace.
-      -- Similar to document symbols, except searches over your entire project.
-      vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+      -- 模糊查找当前工作区中的所有符号。
+      -- 类似于文档符号，但搜索范围是整个项目。
+      vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = '打开工作区符号' })
 
-      -- Jump to the type of the word under your cursor.
-      -- Useful when you're not sure what type a variable is and you want to see
-      -- the definition of its *type*, not where it was *defined*.
-      vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
+      -- 跳转到光标下单词的类型。
+      -- 当你不确定变量类型，想查看其*类型*的定义，
+      -- 而不是其*定义*位置时很有用。
+      vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '跳转到[类]型定义' })
     end,
   })
 
-  -- Override default behavior and theme when searching
+  -- 搜索时覆盖默认行为和主题
   vim.keymap.set('n', '<leader>/', function()
-    -- You can pass additional configuration to Telescope to change the theme, layout, etc.
+    -- 可以向 Telescope 传递额外配置来更改主题、布局等。
     builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
       winblend = 10,
       previewer = false,
     })
-  end, { desc = '[/] Fuzzily search in current buffer' })
+  end, { desc = '[/] 在当前缓冲区中模糊搜索' })
 
-  -- It's also possible to pass additional configuration options.
-  --  See `:help telescope.builtin.live_grep()` for information about particular keys
+  -- 也可以传递额外的配置选项。
+  --  参见 `:help telescope.builtin.live_grep()` 了解特定键的信息
   vim.keymap.set(
     'n',
     '<leader>s/',
     function()
       builtin.live_grep {
         grep_open_files = true,
-        prompt_title = 'Live Grep in Open Files',
+        prompt_title = '在打开的文件中搜索',
       }
     end,
-    { desc = '[S]earch [/] in Open Files' }
+    { desc = '在打开的文件中[搜]索[/]' }
   )
 
-  -- Shortcut for searching your Neovim configuration files
-  vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
+  -- 搜索 Neovim 配置文件的快捷方式
+  vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[搜]索[N]eovim 文件' })
 end
 
 -- ============================================================
--- SECTION 5: LSP
--- LSP keymaps, server configuration, Mason tools installations
+-- 第 5 节：LSP
+-- LSP 按键映射、服务器配置、Mason 工具安装
 -- ============================================================
 do
-  -- [[ LSP Configuration ]]
-  -- Brief aside: **What is LSP?**
+  -- [[ LSP 配置 ]]
+  -- 简要说明：**什么是 LSP？**
   --
-  -- LSP is an initialism you've probably heard, but might not understand what it is.
+  -- LSP 是一个你可能听过但不一定理解的缩写。
   --
-  -- LSP stands for Language Server Protocol. It's a protocol that helps editors
-  -- and language tooling communicate in a standardized fashion.
+  -- LSP 代表 Language Server Protocol（语言服务器协议）。
+  -- 它是一种帮助编辑器和语言工具以标准化方式通信的协议。
   --
-  -- In general, you have a "server" which is some tool built to understand a particular
-  -- language (such as `gopls`, `lua_ls`, `rust_analyzer`, etc.). These Language Servers
-  -- (sometimes called LSP servers, but that's kind of like ATM Machine) are standalone
-  -- processes that communicate with some "client" - in this case, Neovim!
+  -- 一般来说，有一个"服务器"，它是为理解特定语言而构建的工具
+  -- （如 `gopls`、`lua_ls`、`rust_analyzer` 等）。这些语言服务器
+  -- （有时称为 LSP 服务器）是独立的进程，
+  -- 与某个"客户端"通信——在这里就是 Neovim！
   --
-  -- LSP provides Neovim with features like:
-  --  - Go to definition
-  --  - Find references
-  --  - Autocompletion
-  --  - Symbol Search
-  --  - and more!
+  -- LSP 为 Neovim 提供以下功能：
+  --  - 转到定义
+  --  - 查找引用
+  --  - 自动补全
+  --  - 符号搜索
+  --  - 以及更多！
   --
-  -- Thus, Language Servers are external tools that must be installed separately from
-  -- Neovim. This is where `mason` and related plugins come into play.
+  -- 因此，语言服务器是必须与 Neovim 分开安装的外部工具。
+  -- 这就是 `mason` 及相关插件发挥作用的地方。
   --
-  -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
-  -- and elegantly composed help section, `:help lsp-vs-treesitter`
+  -- 如果你对 lsp 与 treesitter 的区别感到困惑，
+  -- 可以查看编写优美的帮助文档 `:help lsp-vs-treesitter`
 
-  -- Useful status updates for LSP.
+  -- LSP 的实用状态更新。
   vim.pack.add { gh 'j-hui/fidget.nvim' }
   require('fidget').setup {}
 
-  --  This function gets run when an LSP attaches to a particular buffer.
-  --    That is to say, every time a new file is opened that is associated with
-  --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-  --    function will be executed to configure the current buffer
+  --  当 LSP 附加到特定缓冲区时，此函数会被执行。
+  --   也就是说，每次打开与某 LSP 关联的新文件时
+  --   （例如，打开 `main.rs` 与 `rust_analyzer` 关联），
+  --   此函数将被执行以配置当前缓冲区
   vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
     callback = function(event)
-      -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-      -- to define small helper and utility functions so you don't have to repeat yourself.
+      -- 注意：记住 Lua 是一种真正的编程语言，因此可以
+      -- 定义小的辅助和工具函数来避免重复代码。
       --
-      -- In this case, we create a function that lets us more easily define mappings specific
-      -- for LSP related items. It sets the mode, buffer and description for us each time.
+      -- 在本例中，我们创建了一个函数，可以更轻松地
+      -- 定义 LSP 相关的映射。它自动设置模式、缓冲区和描述。
       local map = function(keys, func, desc, mode)
         mode = mode or 'n'
         vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
       end
 
-      -- Rename the variable under your cursor.
-      --  Most Language Servers support renaming across files, etc.
-      map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+      -- 重命名光标下的变量。
+      --  大多数语言服务器支持跨文件重命名等。
+      map('grn', vim.lsp.buf.rename, '[重]命[名]')
 
-      -- Execute a code action, usually your cursor needs to be on top of an error
-      -- or a suggestion from your LSP for this to activate.
-      map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+      -- 执行代码操作，通常光标需要位于错误或 LSP 建议上才能激活。
+      map('gra', vim.lsp.buf.code_action, '代码[操]作', { 'n', 'x' })
 
-      -- WARN: This is not Goto Definition, this is Goto Declaration.
-      --  For example, in C this would take you to the header.
-      map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+      -- 警告：这不是转到定义，而是转到声明。
+      --  例如，在 C 中，这将带你到头文件。
+      map('grD', vim.lsp.buf.declaration, '[转]到[声]明')
 
-      -- The following two autocommands are used to highlight references of the
-      -- word under your cursor when your cursor rests there for a little while.
-      --    See `:help CursorHold` for information about when this is executed
+      -- 以下两个自动命令用于当光标在某处停留片刻时，
+      -- 高亮光标下单词的引用。
+      --   参见 `:help CursorHold` 了解何时执行
       --
-      -- When you move your cursor, the highlights will be cleared (the second autocommand).
+      -- 移动光标时，高亮将被清除（第二个自动命令）。
       local client = vim.lsp.get_client_by_id(event.data.client_id)
       if client and client:supports_method('textDocument/documentHighlight', event.buf) then
         local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
@@ -671,19 +666,19 @@ do
         })
       end
 
-      -- The following code creates a keymap to toggle inlay hints in your
-      -- code, if the language server you are using supports them
+      -- 以下代码创建了一个按键映射，用于切换代码中的内联提示，
+      -- 如果你使用的语言服务器支持此功能
       --
-      -- This may be unwanted, since they displace some of your code
+      -- 这可能不是你想要的，因为它们会占据你代码的部分位置
       if client and client:supports_method('textDocument/inlayHint', event.buf) then
-        map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '[T]oggle Inlay [H]ints')
+        map('<leader>th', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end, '切换内联[提]示')
       end
     end,
   })
 
-  -- Enable the following language servers
-  --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-  --  See `:help lsp-config` for information about keys and how to configure
+  -- 启用以下语言服务器
+  --  你可以在此自由添加/删除任何想要的 LSP。它们会被自动安装。
+  --  参见 `:help lsp-config` 了解键的作用和如何配置
   ---@type table<string, vim.lsp.Config>
   local servers = {
     -- clangd = {},
@@ -691,18 +686,18 @@ do
     -- pyright = {},
     -- rust_analyzer = {},
     --
-    -- Some languages (like typescript) have entire language plugins that can be useful:
+    -- 某些语言（如 typescript）有完整的语言插件，可能会很有用：
     --    https://github.com/pmizio/typescript-tools.nvim
     --
-    -- But for many setups, the LSP (`ts_ls`) will work just fine
+    -- 但对大多数设置而言，LSP（`ts_ls`）就已经够用了
     -- ts_ls = {},
 
-    stylua = {}, -- Used to format Lua code
+    stylua = {}, -- 用于格式化 Lua 代码
 
-    -- Special Lua Config, as recommended by neovim help docs
+    -- 特殊的 Lua 配置，遵循 neovim 帮助文档的推荐
     lua_ls = {
       on_init = function(client)
-        client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
+        client.server_capabilities.documentFormattingProvider = false -- 禁用格式化（格式化由 stylua 完成）
 
         if client.workspace_folders then
           local path = client.workspace_folders[1].name
@@ -716,8 +711,8 @@ do
           },
           workspace = {
             checkThirdParty = false,
-            -- NOTE: this is a lot slower and will cause issues when working on your own configuration.
-            --  See https://github.com/neovim/nvim-lspconfig/issues/3189
+            -- 注意：这会慢很多，并且在处理你自己的配置时可能引起问题。
+            --  参见 https://github.com/neovim/nvim-lspconfig/issues/3189
             library = vim.tbl_extend('force', vim.api.nvim_get_runtime_file('', true), {
               '${3rd}/luv/library',
               '${3rd}/busted/library',
@@ -728,7 +723,7 @@ do
       ---@type lspconfig.settings.lua_ls
       settings = {
         Lua = {
-          format = { enable = false }, -- Disable formatting (formatting is done by stylua)
+          format = { enable = false }, -- 禁用格式化（格式化由 stylua 完成）
         },
       },
     },
@@ -741,19 +736,19 @@ do
     gh 'WhoIsSethDaniel/mason-tool-installer.nvim',
   }
 
-  -- Automatically install LSPs and related tools to stdpath for Neovim
+  -- 自动将 LSP 和相关工具安装到 Neovim 的 stdpath
   require('mason').setup {}
 
-  -- Ensure the servers and tools above are installed
+  -- 确保上述服务器和工具已安装
   --
-  -- To check the current status of installed tools and/or manually install
-  -- other tools, you can run
+  -- 查看已安装工具的当前状态和/或手动安装
+  -- 其他工具，可以运行
   --    :Mason
   --
-  -- You can press `g?` for help in this menu.
+  -- 在此菜单中按 `g?` 可以获取帮助。
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
-    -- You can add other tools here that you want Mason to install
+    -- 你可以在这里添加其他想让 Mason 安装的工具
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -765,16 +760,16 @@ do
 end
 
 -- ============================================================
--- SECTION 6: FORMATTING
--- conform.nvim setup and keymap
+-- 第 6 节：格式化
+-- conform.nvim 设置和按键映射
 -- ============================================================
 do
-  -- [[ Formatting ]]
+  -- [[ 格式化 ]]
   vim.pack.add { gh 'stevearc/conform.nvim' }
   require('conform').setup {
     notify_on_error = false,
     format_on_save = function(bufnr)
-      -- You can specify filetypes to autoformat on save here:
+      -- 你可以在此指定保存时自动格式化的文件类型：
       local enabled_filetypes = {
         -- lua = true,
         -- python = true,
@@ -786,81 +781,81 @@ do
       end
     end,
     default_format_opts = {
-      lsp_format = 'fallback', -- Use external formatters if configured below, otherwise use LSP formatting. Set to `false` to disable LSP formatting entirely.
+      lsp_format = 'fallback', -- 如果下面配置了外部格式化工具则使用它，否则使用 LSP 格式化。设为 `false` 完全禁用 LSP 格式化。
     },
-    -- You can also specify external formatters in here.
+    -- 你也可以在此指定外部格式化工具。
     formatters_by_ft = {
       -- rust = { 'rustfmt' },
-      -- Conform can also run multiple formatters sequentially
+      -- Conform 也可以按顺序运行多个格式化工具
       -- python = { "isort", "black" },
       --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
+      -- 使用 'stop_after_first' 运行列表中第一个可用的格式化工具
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
     },
   }
 
-  vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
+  vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[格]式化缓冲区' })
 end
 
 -- ============================================================
--- SECTION 7: AUTOCOMPLETE & SNIPPETS
--- blink.cmp and luasnip setup
+-- 第 7 节：自动补全与代码片段
+-- blink.cmp 和 luasnip 设置
 -- ============================================================
 do
-  -- [[ Snippet Engine ]]
+  -- [[ 代码片段引擎 ]]
 
-  -- NOTE: You can also specify plugin using a version range for its git tag.
-  --  See `:help vim.version.range()` for more info
+  -- 注意：也可以使用 git tag 的版本范围来指定插件。
+  --  参见 `:help vim.version.range()` 了解更多信息
   vim.pack.add { { src = gh 'L3MON4D3/LuaSnip', version = vim.version.range '2.*' } }
   require('luasnip').setup {}
 
-  -- `friendly-snippets` contains a variety of premade snippets.
-  --    See the README about individual language/framework/plugin snippets:
+  -- `friendly-snippets` 包含各种预制代码片段。
+  --    查看 README 了解各语言/框架/插件的代码片段：
   --    https://github.com/rafamadriz/friendly-snippets
   --
   -- vim.pack.add { gh 'rafamadriz/friendly-snippets' }
   -- require('luasnip.loaders.from_vscode').lazy_load()
 
-  -- [[ Autocomplete Engine ]]
+  -- [[ 自动补全引擎 ]]
   vim.pack.add { { src = gh 'saghen/blink.cmp', version = vim.version.range '1.*' } }
   require('blink.cmp').setup {
     keymap = {
-      -- 'default' (recommended) for mappings similar to built-in completions
-      --   <c-y> to accept ([y]es) the completion.
-      --    This will auto-import if your LSP supports it.
-      --    This will expand snippets if the LSP sent a snippet.
-      -- 'super-tab' for tab to accept
-      -- 'enter' for enter to accept
-      -- 'none' for no mappings
+      -- 'default'（推荐）使用类似内置补全的映射
+      --   <c-y> 接受（[y]es）补全。
+      --    如果 LSP 支持，会自动导入。
+      --    如果 LSP 发送了代码片段，会展开它。
+      -- 'super-tab' 使用 Tab 接受
+      -- 'enter' 使用回车接受
+      -- 'none' 不使用映射
       --
-      -- For an understanding of why the 'default' preset is recommended,
-      -- you will need to read `:help ins-completion`
+      -- 要了解为什么推荐使用 'default' 预设，
+      -- 你需要阅读 `:help ins-completion`
       --
-      -- No, but seriously. Please read `:help ins-completion`, it is really good!
+      -- 真的，请认真阅读 `:help ins-completion`，它写得非常好！
       --
-      -- All presets have the following mappings:
-      -- <tab>/<s-tab>: move to right/left of your snippet expansion
-      -- <c-space>: Open menu or open docs if already open
-      -- <c-n>/<c-p> or <up>/<down>: Select next/previous item
-      -- <c-e>: Hide menu
-      -- <c-k>: Toggle signature help
+      -- 所有预设都包含以下映射：
+      -- <tab>/<s-tab>: 移动到代码片段展开的右/左边
+      -- <c-space>: 打开菜单或如果已打开则打开文档
+      -- <c-n>/<c-p> 或 <up>/<down>: 选择上/下一个项目
+      -- <c-e>: 隐藏菜单
+      -- <c-k>: 切换签名帮助
       --
-      -- See `:help blink-cmp-config-keymap` for defining your own keymap
+      -- 查看 `:help blink-cmp-config-keymap` 了解如何自定义按键映射
       preset = 'default',
 
-      -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
+      -- 更高级的 Luasnip 按键映射（如选择选择节点、展开）参见：
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
     },
 
     appearance = {
-      -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-      -- Adjusts spacing to ensure icons are aligned
+      -- 'mono'（默认）用于 'Nerd Font Mono'，'normal' 用于 'Nerd Font'
+      -- 调整间距确保图标对齐
       nerd_font_variant = 'mono',
     },
 
     completion = {
-      -- By default, you may press `<c-space>` to show the documentation.
-      -- Optionally, set `auto_show = true` to show the documentation after a delay.
+      -- 默认情况下，可以按 `<c-space>` 显示文档。
+      -- 也可以设置 `auto_show = true` 在延迟后自动显示文档。
       documentation = { auto_show = false, auto_show_delay_ms = 500 },
     },
 
@@ -870,55 +865,55 @@ do
 
     snippets = { preset = 'luasnip' },
 
-    -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
-    -- which automatically downloads a prebuilt binary when enabled.
+    -- Blink.cmp 包含一个可选的、推荐的 rust 模糊匹配器，
+    -- 启用时会自动下载预构建的二进制文件。
     --
-    -- By default, we use the Lua implementation instead, but you may enable
-    -- the rust implementation via `'prefer_rust_with_warning'`
+    -- 默认使用 Lua 实现，但你可以通过 `'prefer_rust_with_warning'`
+    -- 启用 rust 实现。
     --
-    -- See `:help blink-cmp-config-fuzzy` for more information
+    -- 参见 `:help blink-cmp-config-fuzzy` 了解更多信息
     fuzzy = { implementation = 'lua' },
 
-    -- Shows a signature help window while you type arguments for a function
+    -- 在输入函数参数时显示签名帮助窗口
     signature = { enabled = true },
   }
 end
 
 -- ============================================================
--- SECTION 8: TREESITTER
--- Parser installation, syntax highlighting, folds, indentation
+-- 第 8 节：TREESITTER
+-- 解析器安装、语法高亮、折叠、缩进
 -- ============================================================
 do
-  -- [[ Configure Treesitter ]]
-  --  Used to highlight, edit, and navigate code
+  -- [[ 配置 Treesitter ]]
+  --  用于代码的高亮、编辑和导航
   --
-  --  See `:help nvim-treesitter-intro`
+  --  参见 `:help nvim-treesitter-intro`
 
-  -- NOTE: You can also specify a branch or a specific commit
+  -- 注意：也可以指定分支或特定的提交
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
-  -- Ensure basic parsers are installed
+  -- 确保基本的解析器已安装
   local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
   ---@param language string
   local function treesitter_try_attach(buf, language)
-    -- Check if a parser exists and load it
+    -- 检查解析器是否存在并加载
     if not vim.treesitter.language.add(language) then return end
-    -- Enable syntax highlighting and other treesitter features
+    -- 启用语法高亮和其他 treesitter 功能
     vim.treesitter.start(buf, language)
 
-    -- Enable treesitter based folds
-    -- For more info on folds see `:help folds`
+    -- 启用基于 treesitter 的折叠
+    -- 更多关于折叠的信息参见 `:help folds`
     -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     -- vim.wo.foldmethod = 'expr'
 
-    -- Check if treesitter indentation is available for this language, and if so enable it
-    -- in case there is no indent query, the indentexpr will fallback to the vim's built in one
+    -- 检查 treesitter 缩进是否适用于此语言，如果是则启用
+    -- 如果没有缩进查询，indentexpr 会回退到 vim 的内置方式
     local has_indent_query = vim.treesitter.query.get(language, 'indents') ~= nil
 
-    -- Enable treesitter based indentation
+    -- 启用基于 treesitter 的缩进
     if has_indent_query then vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
   end
 
@@ -933,13 +928,13 @@ do
       local installed_parsers = require('nvim-treesitter').get_installed 'parsers'
 
       if vim.tbl_contains(installed_parsers, language) then
-        -- Enable the parser if it is already installed
+        -- 如果解析器已安装，直接启用
         treesitter_try_attach(buf, language)
       elseif vim.tbl_contains(available_parsers, language) then
-        -- If a parser is available in `nvim-treesitter`, auto-install it and enable it after the installation is done
+        -- 如果 `nvim-treesitter` 中有该解析器，自动安装并在安装完成后启用
         require('nvim-treesitter').install(language):await(function() treesitter_try_attach(buf, language) end)
       else
-        -- Try to enable treesitter features in case the parser exists but is not available from `nvim-treesitter`
+        -- 尝试启用 treesitter 功能，以防解析器存在但不在 `nvim-treesitter` 中
         treesitter_try_attach(buf, language)
       end
     end,
@@ -947,31 +942,30 @@ do
 end
 
 -- ============================================================
--- SECTION 9: OPTIONAL EXAMPLES / NEXT STEPS
--- kickstart.plugins.* examples
+-- 第 9 节：可选示例 / 后续步骤
+-- kickstart.plugins.* 示例
 -- ============================================================
 do
-  -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- place them in the correct locations.
+  -- 以下注释仅在你下载了 kickstart 仓库而非仅复制粘贴 init.lua 时有效。
+  -- 如果你想要这些文件，它们在仓库中，你可以直接下载并放到正确位置。
 
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
+  -- 注意：Neovim 之旅的下一步：为 Kickstart 添加/配置更多插件
   --
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
+  --  以下是我已包含在 Kickstart 仓库中的一些示例插件。
+  --  取消下面任意行的注释以启用它们（你需要重启 nvim）。
   --
   -- require 'kickstart.plugins.debug'
   -- require 'kickstart.plugins.indent_line'
   -- require 'kickstart.plugins.lint'
   -- require 'kickstart.plugins.autopairs'
   -- require 'kickstart.plugins.neo-tree'
-  -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
+  -- require 'kickstart.plugins.gitsigns' -- 添加 gitsigns 推荐的按键映射
 
-  -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+  -- 注意：你可以从 `lua/custom/plugins/*.lua` 添加自己的插件配置等
   --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
+  --  取消下面行的注释，然后将你的插件添加到 `lua/custom/plugins/*.lua` 即可。
   -- require 'custom.plugins'
 end
 
--- The line beneath this is called `modeline`. See `:help modeline`
+-- 下面这一行叫做 `modeline`。参见 `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

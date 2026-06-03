@@ -1,6 +1,6 @@
--- Add indentation guides even on blank lines
+-- 即使在空白行也添加缩进指南
 
--- Enable `lukas-reineke/indent-blankline.nvim`
--- See `:help ibl`
+-- 启用 `lukas-reineke/indent-blankline.nvim`
+-- 参见 `:help ibl`
 vim.pack.add { 'https://github.com/lukas-reineke/indent-blankline.nvim' }
 require('ibl').setup {}
